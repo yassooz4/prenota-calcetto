@@ -91,8 +91,9 @@ def booking_page(api):
     st.caption(f"Orari del campo · {available['timezone']} · aggiornati a ogni apertura della pagina")
     if st.button('Aggiorna disponibilità', key='refresh_slots'):
         st.rerun()
-    columns = st.columns(2)
     for index, slot in enumerate(available['slots']):
+        if index % 2 == 0:
+            columns = st.columns(2)
         free = slot['status'] == 'free'
         label = 'Libero' if free else 'Occupato' if slot['status'] == 'occupied' else 'Già iniziato'
         if columns[index % 2].button(f"{slot['hour']:02}:00 – {slot['hour']+1:02}:00 · {label}", key=f"slot_{slot['hour']}", disabled=not free, width='stretch', type='primary' if st.session_state.get('selected_slot') == (day.isoformat(), slot['hour']) else 'secondary'):
