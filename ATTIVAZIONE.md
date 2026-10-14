@@ -4,7 +4,8 @@ La repository e il foglio sono nuovi. Non cambiare la configurazione di calcetto
 
 ## Già preparato
 
-- Repository privata: https://github.com/yassooz4/prenota-calcetto
+- Repository pubblica, con la conferma del titolare: https://github.com/yassooz4/prenota-calcetto
+- Pagina Streamlit pubblicata: https://prenota-calcetto.streamlit.app/ — le prenotazioni restano disattivate finché non si completano credenziali e collaudo reale.
 - Archivio privato: https://docs.google.com/spreadsheets/d/1zCbjE2S31Y2x0VInBOBekH2JjloE0u2Fv7DQJmWS8Fk/edit
 - Progetto backend: https://script.google.com/u/0/home/projects/1UKMBx7v8K5GIQP3TajiVgQOvtpzmsRsvgvxhMATWnW6g24E9C6owmz-h/edit
 - Nel backend sono già impostati l’ID del nuovo archivio e l’email del proprietario confermata dall’utente.
@@ -53,7 +54,7 @@ La nuova app usa repository `yassooz4/prenota-calcetto`, branch `main`, file `ap
 
 In **Settings → Secrets**, incolla la configurazione del file privato `.streamlit/secrets.toml` e salva. Non aggiungere `BOOKING_DEMO`: la versione pubblicata deve usare l’API Google reale.
 
-Il repository privato può creare un’app con accesso limitato da Streamlit. Per consentire prenotazioni a clienti senza account, verifica la scheda **Sharing** e rendi pubblica la sola app quando la configurazione e il collaudo sono completi. Il foglio e la repository rimangono privati; l’area proprietario mantiene email e password. Questa scelta modifica l’accesso alla pagina e va confermata dal titolare.
+La repository è stata resa pubblica con l’autorizzazione del titolare per superare il limite di una sola app privata dello spazio Streamlit. La pagina dell’app è accessibile ai clienti senza account; fino all’attivazione mostra solo l’avviso di preparazione. Il foglio rimane privato e l’area proprietario richiede email e password. Nessuna credenziale o prenotazione va aggiunta alla repository pubblica.
 
 ## 4. Collaudo finale prima dell’apertura
 
