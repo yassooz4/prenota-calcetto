@@ -5,13 +5,13 @@ La repository e il foglio sono nuovi. Non cambiare la configurazione di calcetto
 ## Già preparato
 
 - Repository pubblica, con la conferma del titolare: https://github.com/yassooz4/prenota-calcetto
-- Pagina Streamlit pubblicata: https://prenota-calcetto.streamlit.app/ — le prenotazioni restano disattivate finché non si completano credenziali e collaudo reale.
+- Pagina Streamlit pubblicata: https://prenota-calcetto.streamlit.app/ — calendario attivo e flusso cliente verificato sulla pagina pubblicata.
 - Archivio privato: https://docs.google.com/spreadsheets/d/1zCbjE2S31Y2x0VInBOBekH2JjloE0u2Fv7DQJmWS8Fk/edit
 - Progetto backend: https://script.google.com/u/0/home/projects/1UKMBx7v8K5GIQP3TajiVgQOvtpzmsRsvgvxhMATWnW6g24E9C6owmz-h/edit
-- API pubblicata: https://script.google.com/macros/s/AKfycby7M8JbMM6iJmsNrVqgw_A95TOImOSnsHN-aR0A9cHXT3sm3qTueWicUwHxKPPSrHxa/exec — risposta di stato verificata; le operazioni di prenotazione richiedono ancora l’installazione delle chiavi.
+- API pubblicata: https://script.google.com/macros/s/AKfycby7M8JbMM6iJmsNrVqgw_A95TOImOSnsHN-aR0A9cHXT3sm3qTueWicUwHxKPPSrHxa/exec — versione 3 attiva; collaudo reale superato per concorrenza, ritentativi, cancellazioni e operazioni proprietario.
 - Nel backend sono già impostati l’ID del nuovo archivio e l’email del proprietario confermata dall’utente.
 - Il codice Apps Script è salvato. Il fuso del progetto e del foglio è Europe/Rome.
-- La password è stata scelta dal titolare e i due file privati sono stati generati. L’indirizzo API è già aggiornato nel file locale `.streamlit/secrets.toml`. Non eseguire nuovamente il generatore.
+- Le credenziali sono installate in Google e Streamlit. La password è stata scelta dal titolare e i due file privati sono stati generati. L’indirizzo API è già aggiornato nel file locale `.streamlit/secrets.toml`. Non eseguire nuovamente il generatore.
 
 ## 1. Genera le nuove credenziali sul tuo computer
 
@@ -56,7 +56,7 @@ La nuova app usa repository `yassooz4/prenota-calcetto`, branch `main`, file `ap
 
 In **Settings → Secrets**, incolla la configurazione del file privato `.streamlit/secrets.toml` e salva. Non aggiungere `BOOKING_DEMO`: la versione pubblicata deve usare l’API Google reale.
 
-La repository è stata resa pubblica con l’autorizzazione del titolare per superare il limite di una sola app privata dello spazio Streamlit. La pagina dell’app è accessibile ai clienti senza account; fino all’attivazione mostra solo l’avviso di preparazione. Il foglio rimane privato e l’area proprietario richiede email e password. Nessuna credenziale o prenotazione va aggiunta alla repository pubblica.
+La repository è stata resa pubblica con l’autorizzazione del titolare per superare il limite di una sola app privata dello spazio Streamlit. La pagina dell’app è accessibile ai clienti senza account; il calendario è attivo e il flusso di conferma/cancellazione è verificato. Il foglio rimane privato e l’area proprietario richiede email e password. Nessuna credenziale o prenotazione va aggiunta alla repository pubblica.
 
 ## 4. Collaudo finale prima dell’apertura
 
