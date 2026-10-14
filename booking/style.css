@@ -1,0 +1,21 @@
+:root { --ink:#173326; --muted:#5F7466; --line:#D8E2D5; }
+.block-container { max-width:1120px; padding:3.6rem 2rem 3rem; }
+.stApp { background:#F4F7F2; }
+h1,h2,h3 { color:var(--ink); letter-spacing:-.04em; }
+h3 { font-size:1.15rem !important; }
+.brand { font-size:.75rem; text-transform:uppercase; letter-spacing:.15em; font-weight:750; color:#187548; margin-bottom:12px; }
+.hero { background:#143F2C; border-radius:24px; padding:32px; color:#FFF; position:relative; overflow:hidden; margin:14px 0 20px; }
+.hero h1 { color:#FFF; font-size:clamp(2rem,4vw,3rem); line-height:1.05; max-width:650px; position:relative; z-index:1; padding:0; }
+.hero p { color:#D4E9D8; font-size:.95rem; position:relative; z-index:1; margin:12px 0 0; }
+.pitch { position:absolute; right:-30px; top:-40px; width:310px; height:230px; border:2px solid #9DD9B325; transform:rotate(-20deg); }
+.pitch:before { content:''; position:absolute; height:100%; border-left:2px solid #9DD9B325; left:50%; }
+.pitch:after { content:''; position:absolute; width:80px; height:80px; border:2px solid #9DD9B325; border-radius:50%; left:calc(50% - 40px); top:calc(50% - 40px); }
+.facts { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px; }
+.fact { background:#FFF; border:1px solid var(--line); border-radius:12px; padding:10px 16px; color:#355A41; font-size:.85rem; }
+[data-testid="stButton"] button,[data-testid="stFormSubmitButton"] button { min-height:48px; border-radius:12px; font-weight:600; }
+[data-testid="stForm"],[data-testid="stExpander"] { background:#FFF; border-radius:18px; border-color:var(--line); }
+[data-testid="stTabs"] [role="tablist"] { margin:0 0 24px; }
+.policy { font-size:.82rem; color:var(--muted); padding:16px 0; line-height:1.65; }
+.confirmed { border:1px solid #AFCDB5; background:#E7F3E8; border-radius:20px; padding:22px; margin-bottom:16px; }
+.confirmed b { color:#145C33; font-size:1.3rem; }
+@media(max-width:640px) { .block-container { padding:3.4rem 1rem 2rem; } .hero { padding:24px; border-radius:19px; } .facts { gap:7px; } .fact { padding:9px 12px; } .pitch { right:-140px; } }

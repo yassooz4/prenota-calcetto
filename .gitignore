@@ -1,0 +1,9 @@
+.streamlit/secrets.toml
+runtime-private.json
+*.xlsx
+*.log
+__pycache__/
+.pytest_cache/
+*.pyc
+.venv/
+.clasp.json
