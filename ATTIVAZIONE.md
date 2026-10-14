@@ -8,8 +8,10 @@ La repository e il foglio sono nuovi. Non cambiare la configurazione di calcetto
 - Pagina Streamlit pubblicata: https://prenota-calcetto.streamlit.app/ — le prenotazioni restano disattivate finché non si completano credenziali e collaudo reale.
 - Archivio privato: https://docs.google.com/spreadsheets/d/1zCbjE2S31Y2x0VInBOBekH2JjloE0u2Fv7DQJmWS8Fk/edit
 - Progetto backend: https://script.google.com/u/0/home/projects/1UKMBx7v8K5GIQP3TajiVgQOvtpzmsRsvgvxhMATWnW6g24E9C6owmz-h/edit
+- API pubblicata: https://script.google.com/macros/s/AKfycby7M8JbMM6iJmsNrVqgw_A95TOImOSnsHN-aR0A9cHXT3sm3qTueWicUwHxKPPSrHxa/exec — risposta di stato verificata; le operazioni di prenotazione richiedono ancora l’installazione delle chiavi.
 - Nel backend sono già impostati l’ID del nuovo archivio e l’email del proprietario confermata dall’utente.
 - Il codice Apps Script è salvato. Il fuso del progetto e del foglio è Europe/Rome.
+- La password è stata scelta dal titolare e i due file privati sono stati generati. L’indirizzo API è già aggiornato nel file locale `.streamlit/secrets.toml`. Non eseguire nuovamente il generatore.
 
 ## 1. Genera le nuove credenziali sul tuo computer
 
