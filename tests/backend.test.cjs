@@ -4,6 +4,33 @@ const NOW=Date.parse('2026-10-14T08:00:00Z');
 const id=()=>crypto.randomBytes(24).toString('base64url'), token=()=>crypto.randomBytes(32).toString('base64url');
 const booking=(changes={})=>({action:'book',date:'2026-10-15',hour:18,first_name:'Cliente',last_name:'Prova',phone:'+393331234567',management_token:token(),request_id:id(),...changes});
 const admin=(action,changes={})=>({action,owner_email:'owner@example.test',request_id:id(),...changes});
+
+test('date convertite da Google Sheets: il turno rimane occupato e la gestione usa YYYY-MM-DD',()=>{
+ const m=mock({now:NOW,coerceDates:true}),p=booking(),created=m.call(p);assert(created.ok);
+ assert.equal(m.call(booking()).error.code,'OCCUPIED');
+ assert.equal(m.call({action:'availability',date:p.date}).result.slots.find(s=>s.hour===18).status,'occupied');
+ assert.equal(m.call({action:'manage',management_token:p.management_token}).result.date,p.date);
+ assert.equal(m.call(p).result.booking_id,created.result.booking_id);
+ assert(m.call({action:'cancel',management_token:p.management_token,request_id:id()}).ok);
+ assert(m.call(booking()).ok);
+});
+
+test('vecchie celle con data numerica: confronto del turno normalizzato',()=>{
+ const m=mock({now:NOW}),p=booking();assert(m.call(p).ok);
+ const data=m.data();data.Prenotazioni[1][3]=Date.parse(p.date+'T00:00:00Z')/86400000+25569;
+ const legacy=mock({now:NOW,data});assert.equal(legacy.call(booking()).error.code,'OCCUPIED');
+ assert.equal(legacy.call({action:'manage',management_token:p.management_token}).result.date,p.date);
+});
+
+test('formati distinti per testo e pagamenti; vecchi booleani stringa normalizzati',()=>{
+ const m=mock({now:NOW}),p=booking(),r=m.call(p);assert(r.ok);
+ assert.equal(m.stats.lastFormats[0][3],'@');assert.equal(m.stats.lastFormats[0][10],'@');
+ assert.equal(m.stats.lastFormats[0][11],'General');assert.equal(m.stats.lastFormats[0][4],'0');
+ const data=m.data();data.Prenotazioni[1][11]='true';
+ const legacy=mock({now:NOW,data});assert.equal(legacy.call(admin('admin_list'),true).result.bookings[0].paid,true);
+ assert(legacy.call(admin('admin_paid',{booking_id:r.result.booking_id,paid:false}),true).ok);
+ assert.equal(legacy.call(admin('admin_list'),true).result.bookings[0].paid,false);
+});
 test('due richieste realmente parallele: un solo evento di prenotazione',async()=>{
   const root=path.resolve(process.env.TEST_SCRATCH||'work/calcetto/concurrency');fs.mkdirSync(root,{recursive:true});
   const file=path.join(root,crypto.randomUUID()+'.json');fs.writeFileSync(file,JSON.stringify(initial()));const lockBuffer=new SharedArrayBuffer(4);

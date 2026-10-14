@@ -51,12 +51,20 @@ function slot_(day,hour,c) {
     fail_('VALIDATION','Il turno non esiste nel fuso scelto.');
   return {date:day,hour,start:guess,end:guess+c.duration_minutes*60000};
 }
-function ledger_(sheet) {
+function ledger_(sheet,timezone) {
   const grid=sheet.getDataRange().getValues();
   if(JSON.stringify(grid[0])!==JSON.stringify(HEADERS)) fail_('ARCHIVE_INVALID','Intestazioni dell’archivio non valide.');
   const events=grid.slice(1).filter(r=>r.some(v=>v!==''&&v!==null)).map(r=>Object.fromEntries(HEADERS.map((h,i)=>[h,r[i]])));
   const states={};
   for(const row of events) {
+    // Sheets può convertire automaticamente YYYY-MM-DD in una cella data.
+    // Il confronto fra turni deve usare sempre la data civile canonica.
+    if(Object.prototype.toString.call(row.Data)==='[object Date]')
+      row.Data=Utilities.formatDate(row.Data,timezone,'yyyy-MM-dd');
+    else if(typeof row.Data==='number')
+      row.Data=new Date(Math.round((row.Data-25569)*86400000)).toISOString().slice(0,10);
+    date_(row.Data);
+    row.Pagato=row.Pagato===true||String(row.Pagato).toLowerCase()==='true';
     if(!row.Prenotazione_ID||!['BOOKING','BLOCK'].includes(row.Tipo)||!['CONFIRMED','CANCELLED','BLOCKED','UNBLOCKED'].includes(row.Stato))
       fail_('ARCHIVE_INVALID','Archivio non valido. Contatta il proprietario.');
     states[row.Prenotazione_ID]=row;
@@ -89,7 +97,10 @@ function append_(sheet,row) {
     return typeof v==='string'&&/^[=+\-@]/.test(v)?"'"+v:v;
   });
   // Stato, hash del token e richiesta sono scritti in un solo record.
-  sheet.getRange(sheet.getLastRow()+1,1,1,HEADERS.length).setValues([safe]);
+  const range=sheet.getRange(sheet.getLastRow()+1,1,1,HEADERS.length);
+  range.setNumberFormats([HEADERS.map(h=>h==='Pagato'?'General':h==='Ora'||h==='Prezzo'?'0':'@')]);
+  // Stringhe ISO e telefoni restano testo; pagamenti restano booleani.
+  range.setValues([safe]);
   SpreadsheetApp.flush(); // La scrittura viene completata prima di rilasciare il lock.
 }
 function handleEnvelope_(envelope) {
@@ -117,7 +128,7 @@ function handleEnvelope_(envelope) {
     held=true;
     const now=Date.now(), book=SpreadsheetApp.openById(spreadsheetId), c=readConfig_(book), sheet=book.getSheetByName('Prenotazioni');
     if(!sheet) fail_('CONFIGURATION','Archivio da configurare.');
-    const {events,states}=ledger_(sheet);
+    const {events,states}=ledger_(sheet,book.getSpreadsheetTimeZone());
     let requestHash='',fingerprint='';
     if(WRITE_ACTIONS.includes(action)) {
       if(typeof p.request_id!=='string'||!/^[-_A-Za-z0-9]{20,100}$/.test(p.request_id)) fail_('VALIDATION','Identificativo della richiesta mancante.');
@@ -206,6 +217,6 @@ function checkConfiguration() {
   for(const key of ['SPREADSHEET_ID','API_SECRET','ADMIN_SECRET','OWNER_EMAIL'])
     if(!props.getProperty(key)) throw new Error('Manca la proprietà '+key);
   const book=SpreadsheetApp.openById(props.getProperty('SPREADSHEET_ID'));
-  readConfig_(book);ledger_(book.getSheetByName('Prenotazioni'));
+  readConfig_(book);ledger_(book.getSheetByName('Prenotazioni'),book.getSpreadsheetTimeZone());
   console.log('Configurazione verificata. Nessuna credenziale viene stampata.');
 }

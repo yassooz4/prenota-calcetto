@@ -38,7 +38,7 @@ python -m pytest tests -q
 node --test tests/backend.test.cjs
 ```
 
-14 test del backend e 14 test Python/Streamlit: concorrenza reale fra thread separati, retry simultanei, risposta persa dopo la scrittura, confine delle 6 ore al millisecondo, riapertura, date/orari invalidi, cambio ora legale, firme, accesso proprietario, prenotazioni telefoniche, pagamenti, blocchi, privacy tra sessioni e funzionamento senza configurazione.
+17 test del backend e 14 test Python/Streamlit: concorrenza reale fra thread separati, retry simultanei, risposta persa dopo la scrittura, confine delle 6 ore al millisecondo, riapertura, date/orari invalidi, cambio ora legale, firme, accesso proprietario, prenotazioni telefoniche, pagamenti, blocchi, privacy tra sessioni e funzionamento senza configurazione. Le regressioni coprono anche date convertite automaticamente da Google Sheets, vecchie date numeriche e pagamenti salvati come stringhe.
 
 I test eseguono **lo stesso Code.gs** con adattatori di test per Google Sheets e ScriptLock. Quelli simultanei condividono un archivio e un mutex atomico fra worker. È una verifica locale della logica e della concorrenza: il collaudo del deployment Google reale va completato dopo aver installato le credenziali.
 
